@@ -1,0 +1,10 @@
+# Example Terraform Variables File
+# Copy this file to terraform.tfvars and replace placeholder values
+# DO NOT commit your real terraform.tfvars file
+
+aws_region         = "us-east-1"
+project_name       = "d342-hybrid-dr"
+key_name           = "your-ec2-key-name"
+my_ip_cidr         = "YOUR_PUBLIC_IP/32"
+backup_bucket_name = "your-unique-s3-bucket-name"
+backup_prefix      = "backups/"
