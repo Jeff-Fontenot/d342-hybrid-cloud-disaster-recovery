@@ -2,7 +2,7 @@
 **WGU D342 Cloud Computing Capstone**
 
 Engineer: Jeff Fontenot  
-Track: BS Cloud Computing – Multicloud  
+Track: BS Cloud Computing – AWS
 
 ---
 
@@ -73,6 +73,13 @@ All remaining steps (infrastructure provisioning, container deployment, database
 - Least-privilege S3 access
 - Data encrypted in transit (HTTPS)
 - Terraform state excluded from version control
+
+---
+
+## Recovery Objectives
+
+- Recovery Point Objective (RPO): 1 hour (defined by backup frequency)
+- Recovery Time Objective (RTO): < 5 minutes (validated via Terraform-based recovery test)
 
 ---
 
