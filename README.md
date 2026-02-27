@@ -20,6 +20,12 @@ All remaining steps (infrastructure provisioning, container deployment, database
 
 ---
 
+## Architecture Diagram
+
+![Hybrid Disaster Recovery Architecture](terraform/docs/architecture.png)
+
+---
+
 ## Architecture Summary
 
 ### Primary Environment (On-Prem)
