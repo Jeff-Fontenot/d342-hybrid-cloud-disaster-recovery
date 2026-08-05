@@ -94,6 +94,7 @@ Terraform then provisions the AWS recovery infrastructure. EC2 user data install
 - No monitoring or alerting system
 - No SSL termination for public production use
 - Schema restore could be made more idempotent
+- Demo database credentials are statically defined in EC2 user data and should be externalized to AWS Secrets Manager or Systems Manager Parameter Store for production use.
 
 ---
 
