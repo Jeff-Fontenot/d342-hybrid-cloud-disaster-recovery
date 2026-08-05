@@ -8,15 +8,13 @@ Track: BS Cloud Computing – AWS
 
 ## Overview
 
-This project implements a practical hybrid cloud disaster recovery (DR) solution designed for small-business workloads.
+This project implements a practical hybrid-cloud disaster-recovery solution for a containerized small-business application.
 
-The primary environment runs on-premises. Database backups are stored in Amazon S3. In a disaster scenario, Terraform provisions AWS infrastructure and automatically restores the latest database backup into a recovery EC2 instance.
-
-The recovery process requires only:
+The primary Flask and PostgreSQL environment runs on an Ubuntu Server VM hosted in Proxmox. Hourly database backups are compressed and uploaded to Amazon S3. During a simulated disaster, recovery is initiated with a single operator command:
 
     terraform apply
 
-All remaining steps (infrastructure provisioning, container deployment, database restore) are automated via cloud-init and scripting.
+Terraform then provisions the AWS recovery infrastructure. EC2 user data installs the required software, launches the application stack with Docker Compose, retrieves the latest PostgreSQL backup from S3, and restores the database without additional operator intervention.
 
 ---
 
@@ -75,17 +73,18 @@ All remaining steps (infrastructure provisioning, container deployment, database
 
 ## Security Considerations
 
-- EC2 uses IAM role (no embedded AWS keys)
-- Least-privilege S3 access
-- Data encrypted in transit (HTTPS)
-- Terraform state excluded from version control
+- EC2 accesses Amazon S3 through an IAM instance profile; no static AWS credentials are embedded in the recovery instance.
+- The IAM policy limits the instance to the S3 permissions required for backup retrieval.
+- AWS API and S3 transfers are protected with TLS.
+- Terraform state and local variable files are excluded from version control.
+- The restored application endpoint does not currently include production-grade TLS termination and should not be exposed publicly without an HTTPS-capable reverse proxy or load balancer.
 
 ---
 
 ## Recovery Objectives
 
-- Recovery Point Objective (RPO): 1 hour (defined by backup frequency)
-- Recovery Time Objective (RTO): < 5 minutes (validated via Terraform-based recovery test)
+- Recovery Point Objective (RPO): Approximately 1 hour, determined by the scheduled backup frequency.
+- Recovery Time Objective (RTO): 3 minutes 55 seconds, measured during a complete Terraform-based recovery test.
 
 ---
 
